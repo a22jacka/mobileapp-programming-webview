@@ -53,11 +53,11 @@ public class MainActivity extends AppCompatActivity {
         x* Call the "showExternalWebPage()" / "showInternalWebPage()" methods
         x  when you select menu options "External Web Page" or "Internal Web Page"
         x  respectively
-        -- Commit and push to your github fork
-        * Take two screenshots using the "Take a screenshot" tool in the AVD
-           showing your App. One (1) screenshot showing your internal web page and
-           one (1) screenshot showing your external web page.
-        */
+        x-- Commit and push to your github fork
+        x* Take two screenshots using the "Take a screenshot" tool in the AVD
+        x   showing your App. One (1) screenshot showing your internal web page and
+        x   one (1) screenshot showing your external web page.
+        x*/
     }
 
     @Override

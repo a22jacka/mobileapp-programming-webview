@@ -1,42 +1,73 @@
 
 # Rapport
 
-**Skriv din rapport här!**
+Först så ändrades namnet på appen genom att ändra texten i string taggarna i 
+strings.xml filen.
 
-_Du kan ta bort all text som finns sedan tidigare_.
+Efter det så ska appen ha tillgång till internet vilket görs via koden i Kod 1 blocket.
+Koden skrivs i AndroidManifest.xml filen och  att appen kan använda internet. 
+```
+<uses-permission android:name="android.permission.INTERNET" />
+```
+Kod 1: Ger internet åtkomst
 
-## Följande grundsyn gäller dugga-svar:
-
-- Ett kortfattat svar är att föredra. Svar som är längre än en sida text (skärmdumpar och programkod exkluderat) är onödigt långt.
-- Svaret skall ha minst en snutt programkod.
-- Svaret skall inkludera en kort övergripande förklarande text som redogör för vad respektive snutt programkod gör eller som svarar på annan teorifråga.
-- Svaret skall ha minst en skärmdump. Skärmdumpar skall illustrera exekvering av relevant programkod. Eventuell text i skärmdumpar måste vara läsbar.
-- I de fall detta efterfrågas, dela upp delar av ditt svar i för- och nackdelar. Dina för- respektive nackdelar skall vara i form av punktlistor med kortare stycken (3-4 meningar).
-
-Programkod ska se ut som exemplet nedan. Koden måste vara korrekt indenterad då den blir lättare att läsa vilket gör det lättare att hitta syntaktiska fel.
+Efter det så ändrades TextView elementet i activity_main.xml filen till ett WebView 
+element och det var givet ett ID. Nu när det har ett ID så kan en variabel som påverkar
+det elementet skapas i MainActivity java classen som visas i Kod 2. Java variabeln ges efter det en 
+WebViewClient vilket gör att appen kan komma surfa internet. För att få det att fungera 
+så bra som möjligt så aktiveras också javascript.
 
 ```
-function errorCallback(error) {
-    switch(error.code) {
-        case error.PERMISSION_DENIED:
-            // Geolocation API stöds inte, gör något
-            break;
-        case error.POSITION_UNAVAILABLE:
-            // Misslyckat positionsanrop, gör något
-            break;
-        case error.UNKNOWN_ERROR:
-            // Okänt fel, gör något
-            break;
-    }
+WebView myWebView;
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    [.-.]
+
+    myWebView = findViewById(R.id.my_webview);
+    myWebView.setWebViewClient(new WebViewClient());
+    myWebView.getSettings().setJavaScriptEnabled(true);
 }
 ```
+Kod 2: Skapar en variabel som ges en WebViewClient och javascript
 
-Bilder läggs i samma mapp som markdown-filen.
+I appen så finns två sidor: en intern och en extern sida. Den externa sidan länkar till his.se
+och den interna sidan är sparad lokalt och skapad med lite HTML och CSS. För byta mellan sidorna 
+så används de tre punkterna i det övre högra hörnet. Den interna sidan visas i bild 1 och den
+externa visas i Bild 2. Sidorna laddas via loadUrl från separata funktioner: showInternalWebPage() 
+respektive showExternalWebPage() som visas i Kod 3. När ett alternativ väljs så kallas en
+funktion, onOptionsItemSelected(), som hämtar rätt sida beroende på ID:et, den funktionen visas i Kod 4.
+Funktionen hämtar ID:et från en varabeln som kommer i parametern och sparar det i en annan variabel som
+heter id. Den varabeln jämförs sedan för att se ifall id matchar ID:et för den interna eller
+externa sidan och kallar rätt funktionen för att visa rätt sida.
 
-![](android.png)
+```
+public void showExternalWebPage(){ myWebView.loadUrl("https://his.se"); }
+public void showInternalWebPage() { myWebView.loadUrl("file:///android_asset/about.html"); }
+```
+Kod 3: Funktionerna för att visa olika sidor
 
-Läs gärna:
+```
+@Override
+public boolean onOptionsItemSelected(MenuItem item) {
+    int id = item.getItemId();
+    if (id == R.id.action_external_web) {
+        showExternalWebPage();
+        return true;
+    }
 
-- Boulos, M.N.K., Warren, J., Gong, J. & Yue, P. (2010) Web GIS in practice VIII: HTML5 and the canvas element for interactive online mapping. International journal of health geographics 9, 14. Shin, Y. &
-- Wunsche, B.C. (2013) A smartphone-based golf simulation exercise game for supporting arthritis patients. 2013 28th International Conference of Image and Vision Computing New Zealand (IVCNZ), IEEE, pp. 459–464.
-- Wohlin, C., Runeson, P., Höst, M., Ohlsson, M.C., Regnell, B., Wesslén, A. (2012) Experimentation in Software Engineering, Berlin, Heidelberg: Springer Berlin Heidelberg.
+    if (id == R.id.action_internal_web) {         
+        showInternalWebPage();
+        return true;
+    }
+    return super.onOptionsItemSelected(item);
+}
+```
+Kod 4: Funktionen för att bestämma vilken sida som ska visas
+
+![](img.png)
+
+Bild 1: Internal webpage
+
+![](img_1.png)
+
+Bild 2: External webpage
