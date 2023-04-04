@@ -13,13 +13,15 @@ import androidx.appcompat.widget.Toolbar;
 public class MainActivity extends AppCompatActivity {
 
     public void showExternalWebPage(){
-        // TODO: Add your code for showing external web page here
+
+        myWebView.loadUrl("https://his.se");
     }
 
     public void showInternalWebPage(){
-        // TODO: Add your code for showing internal web page here
-    }
 
+        myWebView.loadUrl("file:///android_asset/about.html");
+    }
+    WebView myWebView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,18 +29,30 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        WebView myWebView = findViewById(R.id.my_webview);
+        myWebView = findViewById(R.id.my_webview);
         myWebView.setWebViewClient(new WebViewClient());
         myWebView.getSettings().setJavaScriptEnabled(true);
-        myWebView.loadUrl("https://his.se");
+
 
         /*
-        -- Commit and push to your github fork
-        * Move the code that loads a URL into your WebView into the two methods
-          "showExternalWebPage()" and "showInternalWebPage()".
-        * Call the "showExternalWebPage()" / "showInternalWebPage()" methods
-          when you select menu options "External Web Page" or "Internal Web Page"
-          respectively
+        x* Rename your App. Tip: Values->Strings
+        x* Enable Internet access for your App. Tip: Manifest
+        x* Create a WebView element in the layout file main_activity.xml
+        x* Give the WebView element ID "my_webview"
+        x-- Commit and push to your github fork
+        x* Create a private member variable called "myWebView" of type WebView
+        x* Locate the WebView element created in step 1 using the ID created in step 2
+        x* Create a new WebViewClient to attach to our WebView. This allows us to
+        x  browse the web inside our app.
+        x-- Commit and push to your github fork
+        x* Enable Javascript execution in your WebViewClient
+        x* Enter the url to load in our WebView
+        x-- Commit and push to your github fork
+        x* Move the code that loads a URL into your WebView into the two methods
+        x "showExternalWebPage()" and "showInternalWebPage()".
+        x* Call the "showExternalWebPage()" / "showInternalWebPage()" methods
+        x  when you select menu options "External Web Page" or "Internal Web Page"
+        x  respectively
         -- Commit and push to your github fork
         * Take two screenshots using the "Take a screenshot" tool in the AVD
            showing your App. One (1) screenshot showing your internal web page and
@@ -63,11 +77,13 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_external_web) {
             Log.d("==>","Will display external web page");
+            showExternalWebPage();
             return true;
         }
 
         if (id == R.id.action_internal_web) {
             Log.d("==>","Will display internal web page");
+            showInternalWebPage();
             return true;
         }
 
