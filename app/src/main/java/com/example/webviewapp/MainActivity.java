@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -24,11 +26,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        WebView myWebView = findViewById(R.id.my_webview);
+        myWebView.setWebViewClient(new WebViewClient());
+
+
 
         /*
-        -- Commit and push to your github fork
-        * Create a private member variable called "myWebView" of type WebView
-        * Locate the WebView element created in step 1 using the ID created in step 2
+
         * Create a new WebViewClient to attach to our WebView. This allows us to
           browse the web inside our app.
         -- Commit and push to your github fork
